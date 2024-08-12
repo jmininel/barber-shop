@@ -1,12 +1,11 @@
-import Image from "next/image";
+import Image from "next/image"
+import { Button } from "./_components/ui/button"
 
 export default function Home() {
   return (
-    <main className=" py-3 bg-slate-600">
-     <div>home</div>
-
-     
-    
+    <main className="bg-slate-600 py-3">
+      <div>home</div>
+      <Button>teste</Button>
     </main>
-  );
+  )
 }
