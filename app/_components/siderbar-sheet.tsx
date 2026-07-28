@@ -12,6 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog"
+import { Avatar, AvatarImage } from "./ui/avatar"
 
 const SiderbarSheet = () => {
   return (
@@ -19,6 +20,17 @@ const SiderbarSheet = () => {
       <SheetHeader>
         <SheetTitle className="text-left">Menu</SheetTitle>
       </SheetHeader>
+
+      <div className="flex items-center border-b border-solid py-5 gap-3 ">
+        <Avatar>
+          <AvatarImage src="https://www.stryx.com/cdn/shop/articles/man-looking-attractive.jpg?v=1666662774" />
+        </Avatar>
+
+        <div>
+          <p className="font-bold">Tom Hask</p>
+          <p className="text-xs">tomhask@hotmail.com</p>
+        </div>
+      </div>
 
       <div className="flex items-center justify-between gap-3 border-b border-solid py-5">
         <h2 className="font-bold">Olá, faça seu login!</h2>
@@ -47,14 +59,7 @@ const SiderbarSheet = () => {
           </DialogContent>
         </Dialog>
 
-        {/*    <Avatar>
-          <AvatarImage src="https://www.stryx.com/cdn/shop/articles/man-looking-attractive.jpg?v=1666662774" />
-        </Avatar>
 
-        <div>
-          <p className="font-bold">Tom Hask</p>
-          <p className="text-xs">tomhask@hotmail.com</p>
-        </div> */}
       </div>
 
       <div className="flex flex-col gap-2 border-b border-solid py-5">
