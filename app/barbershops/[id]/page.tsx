@@ -30,75 +30,92 @@ const BarbershopPage = async ({ params }: BarbershopPageProps) => {
   }
 
   return (
-    <div>
-      {/*Image*/}
-      <div className="relative h-[250px] w-full">
-        <Image
-          src={barbershop?.imageUrl}
-          fill
-          className="object-cover"
-          alt="Imagem da barberaria"
-        />
+    <div className="min-h-screen bg-background">
+      <div className="mx-auto max-w-6xl md:py-6">
+        <div className="overflow-hidden bg-background md:rounded-[28px] md:border md:border-border/60 md:shadow-xl">
+          {/*Image*/}
+          <div className="relative h-[250px] w-full md:h-[420px] lg:h-[500px]">
+            <Image
+              src={barbershop?.imageUrl}
+              fill
+              priority
+              quality={90}
+              sizes="(max-width: 768px) 100vw, 1200px"
+              className="h-full w-full object-cover object-center"
+              alt="Imagem da barberaria"
+            />
 
-        <Button
-          size="icon"
-          variant="secondary"
-          className="absolute left-4 top-4"
-        >
-          <Link href="/">
-            <ChevronsLeftIcon />
-          </Link>
-        </Button>
-
-        <Sheet>
-          <SheetTrigger asChild>
             <Button
-              className="absolute right-4 top-4"
               size="icon"
-              variant="outline"
+              variant="secondary"
+              className="absolute left-4 top-4"
             >
-              <MenuIcon />
+              <Link href="/">
+                <ChevronsLeftIcon />
+              </Link>
             </Button>
-          </SheetTrigger>
-          <SiderbarSheet />
-        </Sheet>
-      </div>
 
-      {/*title*/}
-      <div className="border-b border-solid p-5">
-        <h1 className="mb-3 text-xl font-bold">{barbershop?.name}</h1>
-        <div className="mb-3 flex items-center gap-1">
-          <MapPinIcon className="text-primary" size={18} />
-          <p className="text-sm">{barbershop?.address}</p>
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button
+                  className="absolute right-4 top-4"
+                  size="icon"
+                  variant="outline"
+                >
+                  <MenuIcon />
+                </Button>
+              </SheetTrigger>
+              <SiderbarSheet />
+            </Sheet>
+          </div>
+
+          <div className="md:px-8 md:pb-8">
+            {/*title*/}
+            <div className="border-b border-solid p-5 md:border-0 md:p-0 md:pt-6">
+              <h1 className="mb-3 text-xl font-bold md:text-3xl">
+                {barbershop?.name}
+              </h1>
+              <div className="mb-3 flex items-center gap-1">
+                <MapPinIcon className="text-primary" size={18} />
+                <p className="text-sm md:text-base">{barbershop?.address}</p>
+              </div>
+
+              <div className="flex items-center gap-1">
+                <StarIcon className="fill-primary text-primary" size={18} />
+                <p className="text-sm md:text-base">5,0 (499 avaliações)</p>
+              </div>
+            </div>
+
+            {/*Description*/}
+            <div className="space-y-2 border-b border-solid p-5 md:border-0 md:p-0 md:py-6">
+              <h2 className="text-xs font-bold uppercase text-gray-400">
+                Sobre nós
+              </h2>
+              <p className="text-justify text-sm md:text-base">
+                {barbershop?.description}
+              </p>
+            </div>
+
+            {/*services*/}
+            <div className="space-y-3 border-b border-solid p-5 md:border-0 md:p-0 md:py-6">
+              <h2 className="text-xs font-bold uppercase text-gray-400">
+                Serviços
+              </h2>
+              <div className="space-y-3">
+                {barbershop.services.map((service) => (
+                  <ServiceItem key={service.id} service={service} />
+                ))}
+              </div>
+            </div>
+
+            {/*contact*/}
+            <div className="space-y-5 p-5 md:p-0 md:pt-6">
+              {barbershop.phones.map((phone) => (
+                <PhoneItem key={phone} phone={phone} />
+              ))}
+            </div>
+          </div>
         </div>
-
-        <div className="flex items-center gap-1">
-          <StarIcon className="fill-primary text-primary" size={18} />
-          <p className="text-sm">5,0 (499 avaliações)</p>
-        </div>
-      </div>
-
-      {/*Description*/}
-      <div className="space-y-2 border-b border-solid p-5">
-        <h2 className="text-xs font-bold uppercase text-gray-400">Sobre nós</h2>
-        <p className="text-justify text-sm">{barbershop?.description}</p>
-      </div>
-
-      {/*services*/}
-      <div className="space-y-3 border-b border-solid p-5">
-        <h2 className="text-xs font-bold uppercase text-gray-400">Serviços</h2>
-        <div className="space-y-3">
-          {barbershop.services.map((service) => (
-            <ServiceItem key={service.id} service={service} />
-          ))}
-        </div>
-      </div>
-
-      {/*contact*/}
-      <div className="space-y-5 p-5">
-        {barbershop.phones.map((phone) => (
-          <PhoneItem key={phone} phone={phone} />
-        ))}
       </div>
     </div>
   )
