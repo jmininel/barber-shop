@@ -12,25 +12,34 @@ import { notFound } from "next/navigation"
 interface BarbershopPageProps {
   params: {
     id: string
+    imageUrl: string
+    name: string
+    address: string
+    description: string
+    services: {
+      id: string
+      name: string
+      price: number
+    }[]
+    phones: string[]
   }
 }
 
 const BarbershopPage = async ({ params }: BarbershopPageProps) => {
   const barbershop = await db.barbershop.findUnique({
     where: {
-      id: params.id,
-    },
-    include: {
-      services: true,
-    },
-  })
+      id: params.id
+   
+    }
+  })      
+   
 
   if (!barbershop) {
     return notFound()
   }
 
   return (
-    <div className="min-h-screen bg-background">
+     <div className="min-h-screen bg-background">
       <div className="mx-auto max-w-6xl md:py-6">
         <div className="overflow-hidden bg-background md:rounded-[28px] md:border md:border-border/60 md:shadow-xl">
           {/*Image*/}

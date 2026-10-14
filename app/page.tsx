@@ -1,12 +1,11 @@
 import Image from "next/image"
 import { Button } from "./_components/ui/button"
 import Header from "./_components/header"
-import { Input } from "./_components/ui/input"
-import { SearchIcon } from "lucide-react"
 import { db } from "./_lib/prisma"
 import BarbershopItem from "./_components/barbershop-item"
 import { quickSearckOption } from "./_constants/search"
 import BookingItem from "./_components/booking-item"
+import Search from "./_components/search"
 
 const Home = async () => {
   const barbershops = await db.barbershop.findMany({})
@@ -30,18 +29,7 @@ const Home = async () => {
             </p>
           </div>
 
-          <div className="flex justify-center md:justify-start">
-            <div className="flex w-full max-w-xl items-center gap-2 rounded-xl border border-border bg-card p-2 shadow-sm">
-              <Input
-                type="text"
-                placeholder="Faça sua busca"
-                className="w-full border-0 bg-transparent p-2 text-gray-700 shadow-none placeholder:text-gray-500 focus-visible:ring-0"
-              />
-              <Button className="rounded-lg bg-indigo-500 p-2 text-white hover:bg-indigo-700 focus:bg-indigo-700 focus:outline-none">
-                <SearchIcon />
-              </Button>
-            </div>
-          </div>
+          <Search />
 
           <div className="mt-2 flex gap-3 overflow-x-auto pb-1 md:flex-wrap md:overflow-visible">
             {quickSearckOption.map((option) => (
