@@ -29,9 +29,11 @@ const BarbershopPage = async ({ params }: BarbershopPageProps) => {
   const barbershop = await db.barbershop.findUnique({
     where: {
       id: params.id
-   
-    }
-  })      
+    },
+    include: {
+      services: true,
+    },
+  })
    
 
   if (!barbershop) {
@@ -112,7 +114,11 @@ const BarbershopPage = async ({ params }: BarbershopPageProps) => {
               </h2>
               <div className="space-y-3">
                 {barbershop.services.map((service) => (
-                  <ServiceItem key={service.id} service={service} />
+                  <ServiceItem
+                    key={service.id}
+                    service={service}
+                    barbershop={barbershop}
+                  />
                 ))}
               </div>
             </div>
