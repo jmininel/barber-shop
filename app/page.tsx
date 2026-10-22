@@ -1,43 +1,62 @@
-import Image from "next/image"
-import { Button } from "./_components/ui/button"
 import Header from "./_components/header"
+import { Button } from "./_components/ui/button"
+import Image from "next/image"
 import { db } from "./_lib/prisma"
 import BarbershopItem from "./_components/barbershop-item"
 import { quickSearckOption } from "./_constants/search"
 import BookingItem from "./_components/booking-item"
 import Search from "./_components/search"
+import Link from "next/link"
+import { getServerSession } from "next-auth"
+import { authOptions } from "./_lib/auth"
+import { format } from "date-fns"
+import { ptBR } from "date-fns/locale"
+import { getConfirmedBookings } from "./_data/get-confirmed-bookings"
 
 const Home = async () => {
+  const session = await getServerSession(authOptions)
   const barbershops = await db.barbershop.findMany({})
-
   const popularBarbershops = await db.barbershop.findMany({
     orderBy: {
       name: "desc",
     },
   })
+  const confirmedBookings = await getConfirmedBookings()
 
   return (
-    <div className="min-h-screen bg-background">
+    <div>
+      {/* header */}
       <Header />
+      <div className="p-5">
+        {/* TEXTO */}
+        <h2 className="text-xl font-bold">
+          Olá, {session?.user ? session.user.name : "bem vindo"}!
+        </h2>
+        <p>
+          <span className="capitalize">
+            {format(new Date(), "EEEE, dd", { locale: ptBR })}
+          </span>
+          <span>&nbsp;de&nbsp;</span>
+          <span className="capitalize">
+            {format(new Date(), "MMMM", { locale: ptBR })}
+          </span>
+        </p>
 
-      <main className="mx-auto max-w-7xl px-4 py-5 md:px-6 lg:px-8">
-        <section className="flex flex-col gap-4 md:gap-6">
-          <div className="flex flex-col gap-2 md:mt-2">
-            <h2 className="text-2xl font-bold md:text-3xl">Olá, Juliana</h2>
-            <p className="text-sm text-muted-foreground md:text-base">
-              Segunda-feira 05 Agosto
-            </p>
-          </div>
-
+        {/* BUSCA */}
+        <div className="mt-6">
           <Search />
+        </div>
 
-          <div className="mt-2 flex gap-3 overflow-x-auto pb-1 md:flex-wrap md:overflow-visible">
-            {quickSearckOption.map((option) => (
-              <Button
-                className="gap-2 whitespace-nowrap md:px-4"
-                variant="secondary"
-                key={option.title}
-              >
+        {/* BUSCA RÁPIDA */}
+        <div className="mt-6 flex gap-3 overflow-x-scroll [&::-webkit-scrollbar]:hidden">
+          {quickSearckOption.map((option) => (
+            <Button
+              className="gap-2"
+              variant="secondary"
+              key={option.title}
+              asChild
+            >
+              <Link href={`/barbershops?service=${option.title}`}>
                 <Image
                   src={option.imageUrl}
                   width={16}
@@ -45,48 +64,57 @@ const Home = async () => {
                   alt={option.title}
                 />
                 {option.title}
-              </Button>
-            ))}
-          </div>
-        </section>
+              </Link>
+            </Button>
+          ))}
+        </div>
 
-        <section className="mt-6">
-          <div className="relative h-[180px] w-full overflow-hidden rounded-2xl md:h-[280px]">
-            <Image
-              src="/banner-01.png"
-              alt="Agende com os melhores na Barber-Shop"
-              fill
-              className="rounded-2xl object-cover"
-            />
-          </div>
-        </section>
+        {/* IMAGEM */}
+        <div className="relative mt-6 h-[150px] w-full">
+          <Image
+            alt="Agende nos melhores com FSW Barber"
+            src="/banner-01.png"
+            fill
+            className="rounded-xl object-cover"
+          />
+        </div>
 
-        <section className="mt-6 md:mt-8">
-          <BookingItem />
-        </section>
+        {confirmedBookings.length > 0 && (
+          <>
+            <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
+              Agendamentos
+            </h2>
 
-        <section className="mt-8">
-          <h2 className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-gray-400">
-            Recomendados
-          </h2>
-          <div className="flex gap-4 overflow-auto pb-2 [&::-webkit-scrollbar]:hidden">
-            {barbershops.map((barbershop) => (
-              <BarbershopItem key={barbershop.id} barbershop={barbershop} />
-            ))}
-          </div>
-        </section>
+            {/* AGENDAMENTO */}
+            <div className="flex gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+              {confirmedBookings.map((booking) => (
+                <BookingItem
+                  key={booking.id}
+                  booking={JSON.parse(JSON.stringify(booking))}
+                />
+              ))}
+            </div>
+          </>
+        )}
 
-        <section className="mt-8 pb-8">
-          <h2 className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-gray-400">
-            Populares
-          </h2>
-          <div className="flex gap-4 overflow-auto pb-2 [&::-webkit-scrollbar]:hidden">
-            {popularBarbershops.map((barbershop) => (
-              <BarbershopItem key={barbershop.id} barbershop={barbershop} />
-            ))}
-          </div>
-        </section>
-      </main>
+        <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
+          Recomendados
+        </h2>
+        <div className="flex gap-4 overflow-auto [&::-webkit-scrollbar]:hidden">
+          {barbershops.map((barbershop) => (
+            <BarbershopItem key={barbershop.id} barbershop={barbershop} />
+          ))}
+        </div>
+
+        <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
+          Populares
+        </h2>
+        <div className="flex gap-4 overflow-auto [&::-webkit-scrollbar]:hidden">
+          {popularBarbershops.map((barbershop) => (
+            <BarbershopItem key={barbershop.id} barbershop={barbershop} />
+          ))}
+        </div>
+      </div>
     </div>
   )
 }
