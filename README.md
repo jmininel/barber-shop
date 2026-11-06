@@ -4,7 +4,7 @@ Uma landing page moderna e responsiva para uma barbearia, desenvolvida para apre
 
 ## Preview
 
-![Preview do Portfólio](./public/barbershop.gif)
+![Preview do Portfólio](./public/barbeshop.gif)
 
 ---
 
