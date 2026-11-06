@@ -2,6 +2,12 @@
 
 Uma landing page moderna e responsiva para uma barbearia, desenvolvida para apresentar serviços, profissionais e facilitar o agendamento de horários por meio de uma interface intuitiva e elegante.
 
+## Preview
+
+![Preview do Portfólio](./public/barbershop.gif)
+
+---
+
 ## ✨ Funcionalidades
 
 * Design moderno e responsivo
