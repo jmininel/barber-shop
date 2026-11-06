@@ -64,9 +64,9 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
               Digite o nome de uma barbearia, endereço ou serviço para buscar.
             </p>
           ) : barbershops.length > 0 ? (
-            <div className="flex flex-wrap gap-4">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {barbershops.map((barbershop) => (
-                <div key={barbershop.id}>
+                <div key={barbershop.id} className="min-w-0">
                   <BarbershopItem barbershop={barbershop} />
                   {barbershop.services.length > 0 && (
                     <div className="mt-2 max-w-[240px]">

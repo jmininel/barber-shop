@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer>
       <Card>
-        <CardContent className="px-5 py-6">
+        <CardContent className="mx-auto max-w-7xl px-5 py-6 md:px-6 lg:px-8">
           <p className="text-sm text-gray-400">
             © 2023 Copyright <span className="font-bold">FSW Barber</span>
           </p>

@@ -24,31 +24,35 @@ const Home = async () => {
   const confirmedBookings = await getConfirmedBookings()
 
   return (
-    <div>
+    <div className="min-h-screen bg-background">
       {/* header */}
       <Header />
-      <div className="p-5">
+      <main className="mx-auto max-w-7xl px-4 py-6 md:px-6 lg:px-8 lg:py-10">
         {/* TEXTO */}
-        <h2 className="text-xl font-bold">
-          Olá, {session?.user ? session.user.name : "bem vindo"}!
-        </h2>
-        <p>
-          <span className="capitalize">
-            {format(new Date(), "EEEE, dd", { locale: ptBR })}
-          </span>
-          <span>&nbsp;de&nbsp;</span>
-          <span className="capitalize">
-            {format(new Date(), "MMMM", { locale: ptBR })}
-          </span>
-        </p>
+        <div className="lg:flex lg:items-end lg:justify-between">
+          <div>
+            <h2 className="text-xl font-bold">
+              Olá, {session?.user ? session.user.name : "bem vindo"}!
+            </h2>
+            <p>
+              <span className="capitalize">
+                {format(new Date(), "EEEE, dd", { locale: ptBR })}
+              </span>
+              <span>&nbsp;de&nbsp;</span>
+              <span className="capitalize">
+                {format(new Date(), "MMMM", { locale: ptBR })}
+              </span>
+            </p>
+          </div>
+        </div>
 
         {/* BUSCA */}
-        <div className="mt-6">
+        <div className="mt-6 lg:mt-8">
           <Search />
         </div>
 
         {/* BUSCA RÁPIDA */}
-        <div className="mt-6 flex gap-3 overflow-x-scroll [&::-webkit-scrollbar]:hidden">
+        <div className="mt-6 flex gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden lg:flex-wrap lg:overflow-visible">
           {quickSearckOption.map((option) => (
             <Button
               className="gap-2"
@@ -70,23 +74,23 @@ const Home = async () => {
         </div>
 
         {/* IMAGEM */}
-        <div className="relative mt-6 h-[150px] w-full">
+        <div className="relative mt-6 h-[150px] w-full overflow-hidden rounded-xl md:h-[220px] lg:mt-8 lg:h-[280px]">
           <Image
             alt="Agende nos melhores com FSW Barber"
             src="/banner-01.png"
             fill
-            className="rounded-xl object-cover"
+            className="object-cover"
           />
         </div>
 
         {confirmedBookings.length > 0 && (
           <>
-            <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
+            <h2 className="mb-3 mt-8 text-xs font-bold uppercase text-gray-400">
               Agendamentos
             </h2>
 
             {/* AGENDAMENTO */}
-            <div className="flex gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+            <div className="flex gap-3 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden md:grid md:grid-cols-2 md:overflow-visible xl:grid-cols-3">
               {confirmedBookings.map((booking) => (
                 <BookingItem
                   key={booking.id}
@@ -97,24 +101,24 @@ const Home = async () => {
           </>
         )}
 
-        <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
+        <h2 className="mb-3 mt-8 text-xs font-bold uppercase text-gray-400">
           Recomendados
         </h2>
-        <div className="flex gap-4 overflow-auto [&::-webkit-scrollbar]:hidden">
+        <div className="flex gap-4 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden md:grid md:grid-cols-3 md:overflow-visible xl:grid-cols-4">
           {barbershops.map((barbershop) => (
             <BarbershopItem key={barbershop.id} barbershop={barbershop} />
           ))}
         </div>
 
-        <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
+        <h2 className="mb-3 mt-8 text-xs font-bold uppercase text-gray-400">
           Populares
         </h2>
-        <div className="flex gap-4 overflow-auto [&::-webkit-scrollbar]:hidden">
+        <div className="flex gap-4 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden md:grid md:grid-cols-3 md:overflow-visible xl:grid-cols-4">
           {popularBarbershops.map((barbershop) => (
             <BarbershopItem key={barbershop.id} barbershop={barbershop} />
           ))}
         </div>
-      </div>
+      </main>
     </div>
   )
 }

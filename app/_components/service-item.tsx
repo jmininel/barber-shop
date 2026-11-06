@@ -164,7 +164,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
   return (
     <>
       <Card>
-        <CardContent className="flex items-center gap-3 p-3">
+        <CardContent className="flex items-stretch gap-3 p-3">
           {/* IMAGE */}
           <div className="relative max-h-[110px] min-h-[110px] min-w-[110px] max-w-[110px]">
             <Image
@@ -175,11 +175,13 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
             />
           </div>
           {/* DIREITA */}
-          <div className="space-y-2">
-            <h3 className="text-sm font-semibold">{service.name}</h3>
-            <p className="text-sm text-gray-400">{service.description}</p>
+          <div className="flex min-w-0 flex-1 flex-col">
+            <h3 className="line-clamp-1 text-sm font-semibold">{service.name}</h3>
+            <p className="line-clamp-2 text-sm text-gray-400">
+              {service.description}
+            </p>
             {/* PREÇO E BOTÃO */}
-            <div className="flex items-center justify-between">
+            <div className="mt-auto flex items-center justify-between gap-2 pt-2">
               <p className="text-sm font-bold text-primary">
                 {Intl.NumberFormat("pt-BR", {
                   style: "currency",
@@ -194,83 +196,87 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                 <Button
                   variant="secondary"
                   size="sm"
+                  className="shrink-0"
                   onClick={handleBookingClick}
                 >
                   Reservar
                 </Button>
 
-                <SheetContent className="px-0">
-                  <SheetHeader>
+                <SheetContent className="flex h-dvh max-h-dvh flex-col overflow-hidden px-0">
+                  <SheetHeader className="shrink-0 px-6">
                     <SheetTitle>Fazer Reserva</SheetTitle>
                   </SheetHeader>
 
-                  <div className="border-b border-solid py-5">
-                    <Calendar
-                      mode="single"
-                      locale={ptBR}
-                      selected={selectedDay}
-                      onSelect={handleDateSelect}
-                      startMonth={startOfToday()}
-                      disabled={{ before: startOfToday() }}
-                      styles={{
-                        day: {
-                          width: "100%",
-                        },
-                        weekday: {
-                          width: "100%",
-                          textTransform: "capitalize",
-                        },
-                        day_button: {
-                          width: "100%",
-                        },
-                        button_previous: {
-                          width: "32px",
-                          height: "32px",
-                        },
-                        button_next: {
-                          width: "32px",
-                          height: "32px",
-                        },
-                        caption_label: {
-                          textTransform: "capitalize",
-                        },
-                      }}
-                    />
-                  </div>
-
-                  {selectedDay && (
-                    <div className="flex gap-3 overflow-x-auto border-b border-solid p-5 [&::-webkit-scrollbar]:hidden">
-                      {timeList.length > 0 ? (
-                        timeList.map((time) => (
-                          <Button
-                            key={time}
-                            variant={
-                              selectedTime === time ? "default" : "outline"
-                            }
-                            className="rounded-full"
-                            onClick={() => handleTimeSelect(time)}
-                          >
-                            {time}
-                          </Button>
-                        ))
-                      ) : (
-                        <p className="text-xs">
-                          Não há horários disponíveis para este dia.
-                        </p>
-                      )}
-                    </div>
-                  )}
-
-                  {selectedDate && (
-                    <div className="p-5">
-                      <BookingSummary
-                        barbershop={barbershop}
-                        service={service}
-                        selectedDate={selectedDate}
+                  <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
+                    <div className="border-b border-solid py-5">
+                      <Calendar
+                        mode="single"
+                        locale={ptBR}
+                        selected={selectedDay}
+                        onSelect={handleDateSelect}
+                        startMonth={startOfToday()}
+                        disabled={{ before: startOfToday() }}
+                        styles={{
+                          day: {
+                            width: "100%",
+                          },
+                          weekday: {
+                            width: "100%",
+                            textTransform: "capitalize",
+                          },
+                          day_button: {
+                            width: "100%",
+                          },
+                          button_previous: {
+                            width: "32px",
+                            height: "32px",
+                          },
+                          button_next: {
+                            width: "32px",
+                            height: "32px",
+                          },
+                          caption_label: {
+                            textTransform: "capitalize",
+                          },
+                        }}
                       />
                     </div>
-                  )}
-                  <SheetFooter className="mt-5 px-5">
+
+                    {selectedDay && (
+                      <div className="flex gap-3 overflow-x-auto border-b border-solid p-5 [&::-webkit-scrollbar]:hidden">
+                        {timeList.length > 0 ? (
+                          timeList.map((time) => (
+                            <Button
+                              key={time}
+                              variant={
+                                selectedTime === time ? "default" : "outline"
+                              }
+                              className="rounded-full"
+                              onClick={() => handleTimeSelect(time)}
+                            >
+                              {time}
+                            </Button>
+                          ))
+                        ) : (
+                          <p className="text-xs">
+                            Não há horários disponíveis para este dia.
+                          </p>
+                        )}
+                      </div>
+                    )}
+
+                    {selectedDate && (
+                      <div className="p-5">
+                        <BookingSummary
+                          barbershop={barbershop}
+                          service={service}
+                          selectedDate={selectedDate}
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  <SheetFooter className="mt-auto shrink-0 border-t bg-background px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-4">
                     <Button
                       onClick={handleCreateBooking}
                       disabled={!selectedDay || !selectedTime}

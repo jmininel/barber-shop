@@ -9,9 +9,9 @@ import Link from "next/link"
 
 const Header = () => {
   return (
-    <div>
+    <header>
       <Card>
-        <CardContent className="flex flex-row items-center justify-around p-5">
+        <CardContent className="mx-auto flex max-w-7xl flex-row items-center justify-between p-5 md:px-6 lg:px-8">
           <Link href="/">
            <Image
             src="/logo.png"
@@ -30,7 +30,7 @@ const Header = () => {
           </Sheet>
         </CardContent>
       </Card>
-    </div>
+    </header>
   )
 }
 

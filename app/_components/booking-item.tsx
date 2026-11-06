@@ -67,8 +67,8 @@ const BookingItem = ({ booking }: BookingItemProps) => {
    }
    return (
       <Sheet open={isSheetOpen} onOpenChange={handleSheetOpenChange}>
-         <SheetTrigger className="w-full min-w-[90%]">
-            <Card className="min-w-[90%]">
+         <SheetTrigger className="w-full min-w-[90%] md:min-w-0">
+            <Card className="w-full min-w-[90%] md:min-w-0">
                <CardContent className="flex justify-between p-0">
                   {/* ESQUERDA */}
                   <div className="flex flex-col gap-2 py-5 pl-5">
@@ -102,55 +102,57 @@ const BookingItem = ({ booking }: BookingItemProps) => {
                </CardContent>
             </Card>
          </SheetTrigger>
-         <SheetContent className="w-[85%]">
-            <SheetHeader>
+         <SheetContent className="flex h-dvh max-h-dvh w-[85%] flex-col overflow-hidden">
+            <SheetHeader className="shrink-0">
                <SheetTitle className="text-left">Informações da Reserva</SheetTitle>
             </SheetHeader>
 
-            <div className="relative mt-6 flex h-[180px] w-full items-end">
-               <Image
-                  alt={`Mapa da barbearia ${booking.service.barbershop.name}`}
-                  src="/map.png"
-                  fill
-                  className="rounded-xl object-cover"
-               />
-
-               <Card className="z-50 mx-5 mb-3 w-full rounded-xl">
-                  <CardContent className="flex items-center gap-3 px-5 py-3">
-                     <Avatar>
-                        <AvatarImage src={barbershop.imageUrl} />
-                     </Avatar>
-                     <div>
-                        <h3 className="font-bold">{barbershop.name}</h3>
-                        <p className="text-xs">{barbershop.address}</p>
-                     </div>
-                  </CardContent>
-               </Card>
-            </div>
-
-            <div className="mt-6">
-               <Badge
-                  className="w-fit"
-                  variant={isConfirmed ? "default" : "secondary"}
-               >
-                  {isConfirmed ? "Confirmado" : "Finalizado"}
-               </Badge>
-
-               <div className="mb-3 mt-6">
-                  <BookingSummary
-                     barbershop={barbershop}
-                     service={booking.service}
-                     selectedDate={booking.date}
+            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
+               <div className="relative mt-6 flex h-[180px] w-full items-end">
+                  <Image
+                     alt={`Mapa da barbearia ${booking.service.barbershop.name}`}
+                     src="/map.png"
+                     fill
+                     className="rounded-xl object-cover"
                   />
+
+                  <Card className="z-50 mx-5 mb-3 w-full rounded-xl">
+                     <CardContent className="flex items-center gap-3 px-5 py-3">
+                        <Avatar>
+                           <AvatarImage src={barbershop.imageUrl} />
+                        </Avatar>
+                        <div>
+                           <h3 className="font-bold">{barbershop.name}</h3>
+                           <p className="text-xs">{barbershop.address}</p>
+                        </div>
+                     </CardContent>
+                  </Card>
                </div>
 
-               <div className="space-y-3">
-                  {barbershop.phones.map((phone, index) => (
-                     <PhoneItem key={index} phone={phone} />
-                  ))}
+               <div className="mt-6">
+                  <Badge
+                     className="w-fit"
+                     variant={isConfirmed ? "default" : "secondary"}
+                  >
+                     {isConfirmed ? "Confirmado" : "Finalizado"}
+                  </Badge>
+
+                  <div className="mb-3 mt-6">
+                     <BookingSummary
+                        barbershop={barbershop}
+                        service={booking.service}
+                        selectedDate={booking.date}
+                     />
+                  </div>
+
+                  <div className="space-y-3">
+                     {barbershop.phones.map((phone, index) => (
+                        <PhoneItem key={index} phone={phone} />
+                     ))}
+                  </div>
                </div>
             </div>
-            <SheetFooter className="mt-6">
+            <SheetFooter className="mt-auto shrink-0 border-t bg-background pt-4 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
                <div className="flex items-center gap-3">
                   <SheetClose asChild>
                      <Button variant="outline" className="w-full">
