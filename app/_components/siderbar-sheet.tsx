@@ -30,7 +30,7 @@ const SiderbarSheet = () => {
   }
 
   return (
-    <SheetContent className="overflow-y-auto-y-auto">
+    <SheetContent className="max-h-dvh overflow-y-auto overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       <SheetHeader>
         <SheetTitle className="text-left">Menu</SheetTitle>
       </SheetHeader>

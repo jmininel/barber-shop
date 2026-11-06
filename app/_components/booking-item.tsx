@@ -107,7 +107,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
                <SheetTitle className="text-left">Informações da Reserva</SheetTitle>
             </SheetHeader>
 
-            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
+            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                <div className="relative mt-6 flex h-[180px] w-full items-end">
                   <Image
                      alt={`Mapa da barbearia ${booking.service.barbershop.name}`}

@@ -207,7 +207,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                     <SheetTitle>Fazer Reserva</SheetTitle>
                   </SheetHeader>
 
-                  <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
+                  <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                     <div className="border-b border-solid py-5">
                       <Calendar
                         mode="single"
@@ -243,20 +243,22 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                     </div>
 
                     {selectedDay && (
-                      <div className="flex gap-3 overflow-x-auto border-b border-solid p-5 [&::-webkit-scrollbar]:hidden">
+                      <div className="border-b border-solid p-5">
                         {timeList.length > 0 ? (
-                          timeList.map((time) => (
-                            <Button
-                              key={time}
-                              variant={
-                                selectedTime === time ? "default" : "outline"
-                              }
-                              className="rounded-full"
-                              onClick={() => handleTimeSelect(time)}
-                            >
-                              {time}
-                            </Button>
-                          ))
+                          <div className="grid grid-cols-3 gap-3 sm:grid-cols-4">
+                            {timeList.map((time) => (
+                              <Button
+                                key={time}
+                                variant={
+                                  selectedTime === time ? "default" : "outline"
+                                }
+                                className="w-full rounded-full"
+                                onClick={() => handleTimeSelect(time)}
+                              >
+                                {time}
+                              </Button>
+                            ))}
+                          </div>
                         ) : (
                           <p className="text-xs">
                             Não há horários disponíveis para este dia.
